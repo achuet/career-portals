@@ -1,6 +1,12 @@
 # Temporary files
 ~$*.xlsx
-raw_extracted.json
-parsed_xlsx.json
+# Ignore raw data files & build scripts
+*.xlsx
+*.csv
+*.json
+url_validation_report.json
+scripts/
+chrome-extension/
+extension/
 .DS_Store
 Thumbs.db

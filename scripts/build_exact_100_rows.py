@@ -1,0 +1,135 @@
+import json, os, re
+
+# Complete mapping for healthcare 1 to 100
+health_100_items = [
+  ("Apollo Hospitals", "https://www.apollohospitals.com", "https://www.apollohospitals.com/careers/", "Hyderabad, Chennai, Bengaluru, Mumbai, Delhi NCR", "Hospital Chain", "Asia's largest healthcare group & multi-specialty hospitals"),
+  ("Fortis Healthcare", "https://www.fortishealthcare.com", "https://www.fortishealthcare.com/careers", "Delhi NCR, Bengaluru, Mumbai, Hyderabad", "Hospital Chain", "Super-specialty hospital network & diagnostic services"),
+  ("Manipal Hospitals", "https://www.manipalhospitals.com", "https://www.manipalhospitals.com/careers/", "Bengaluru, Hyderabad, Pune, Delhi NCR, Mumbai", "Hospital Chain", "Tertiary care multi-specialty healthcare delivery"),
+  ("Max Healthcare", "https://www.maxhealthcare.in", "https://www.maxhealthcare.in/careers", "Delhi NCR, Mumbai, Dehradun", "Hospital Chain", "Oncology, Cardiology & Organ Transplant Specialty"),
+  ("Narayana Health", "https://www.narayanahealth.org", "https://www.narayanahealth.org/careers", "Bengaluru, Hyderabad, Kolkata, Jaipur", "Hospital Chain", "Affordable cardiac care & organ transplant services"),
+  ("Aster DM Healthcare", "https://www.asterdmhealthcare.com", "https://www.asterdmhealthcare.com/careers", "Bengaluru, Hyderabad, Kerala, Mumbai", "Hospital Chain", "Integrated healthcare network with hospitals & clinics"),
+  ("KIMS Hospitals", "https://www.kimshospitals.com", "https://www.kimshospitals.com/careers/", "Hyderabad, Secunderabad, Visakhapatnam", "Hospital Chain", "Krishna Institute of Medical Sciences - Tertiary hospitals"),
+  ("Yashoda Hospitals", "https://www.yashodahospitals.com", "https://www.yashodahospitals.com/careers/", "Hyderabad, Secunderabad", "Hospital Chain", "Super-specialty medical care, robotics surgery & oncology"),
+  ("CARE Hospitals", "https://www.carehospitals.com", "https://www.carehospitals.com/careers/", "Hyderabad, Bengaluru, Bhubaneswar, Raipur", "Hospital Chain", "Multi-specialty cardiac care, neurology & critical care"),
+  ("Continental Hospitals", "https://continentalhospitals.com", "https://continentalhospitals.com/careers/", "Hyderabad", "Hospital Chain", "JCI accredited tertiary super-specialty hospital"),
+  ("Sunshine Hospitals", "https://www.sunshinehospitals.com", "https://www.sunshinehospitals.com/careers/", "Hyderabad, Secunderabad", "Hospital Chain", "Joint replacement, orthopedics & trauma specialty"),
+  ("Medicover Hospitals India", "https://www.medicoverhospitals.in", "https://www.medicoverhospitals.in/careers", "Hyderabad, Pune, Bengaluru, Vizag, Nashik", "Hospital Chain", "European standard multi-specialty hospital network"),
+  ("Rainbow Children's Hospital", "https://www.rainbowhospitals.in", "https://www.rainbowhospitals.in/careers", "Hyderabad, Bengaluru, Chennai, Delhi NCR", "Pediatric Hospital", "India's leading pediatric & perinatal specialty chain"),
+  ("MGM Healthcare", "https://mgmhealthcare.in", "https://mgmhealthcare.in/careers/", "Chennai, Pondicherry", "Hospital Chain", "Quaternary care & heart-lung transplantation specialty"),
+  ("Gleneagles Hospitals India", "https://www.gleneagles-hospitals.in", "https://www.gleneagles-hospitals.in/careers", "Mumbai, Hyderabad, Bengaluru, Chennai", "Hospital Chain", "Part of IHH Healthcare - Organ transplant & quaternary care"),
+  ("Sri Ramachandra Medical Centre", "https://www.sriramachandra.edu.in", "https://www.sriramachandra.edu.in/careers", "Chennai", "Medical Institute", "Teaching hospital, tertiary care & medical research"),
+  ("Kokilaben Dhirubhai Ambani Hospital", "https://www.kokilabenhospital.com", "https://www.kokilabenhospital.com/careers.html", "Mumbai", "Hospital Chain", "Multi-specialty tertiary care, robotics & oncology"),
+  ("HCG Cancer Centre", "https://www.hcgoncology.com", "https://www.hcgoncology.com/careers", "Bengaluru, Ahmedabad, Hyderabad, Jaipur", "Oncology Specialty", "HealthCare Global - Comprehensive cancer care network"),
+  ("HealthCare Global Enterprises", "https://www.hcgoncology.com", "https://www.hcgoncology.com/careers", "Bengaluru, Hyderabad, Mumbai, Ahmedabad", "Oncology Specialty", "Specialty cancer care & precision oncology"),
+  ("Shalby Hospitals", "https://www.shalby.org", "https://www.shalby.org/careers/", "Ahmedabad, Jaipur, Surat, Mumbai", "Hospital Chain", "Arthroplasty, joint replacement & multi-specialty care"),
+  ("Wockhardt Hospitals", "https://www.wockhardthospitals.com", "https://www.wockhardthospitals.com/careers/", "Mumbai, Bengaluru, Nagpur, Hyderabad", "Hospital Chain", "Super-specialty cardiac, neuro & surgical care"),
+  ("Jehangir Hospital", "https://www.jehangirhospital.com", "https://www.jehangirhospital.com/careers.php", "Pune", "Hospital Chain", "Multi-specialty tertiary care hospital in Western India"),
+  ("Ruby Hall Clinic", "https://rubyhall.com", "https://rubyhall.com/careers", "Pune", "Hospital Chain", "Organ transplant, cardiac care & cancer specialty"),
+  ("Columbia Asia Hospitals", "https://www.manipalhospitals.com", "https://www.manipalhospitals.com/careers/", "Bengaluru, Pune, Mysuru, Kolkata", "Hospital Chain", "Multi-specialty network (acquired by Manipal Hospitals)"),
+  ("Sagar Hospitals", "https://www.sagarhospitals.in", "https://www.sagarhospitals.in/careers/", "Bengaluru", "Hospital Chain", "Tertiary medical care, neuro & cardiac sciences"),
+  ("Cloudnine Hospitals", "https://www.cloudninehospitals.com", "https://www.cloudninehospitals.com/careers", "Bengaluru, Hyderabad, Mumbai, Pune, Chennai, Delhi NCR", "Maternity Hospital", "Specialty maternity, fertility & neonatal care"),
+  ("Motherhood Hospitals", "https://www.motherhoodhospitals.com", "https://www.motherhoodhospitals.com/careers/", "Bengaluru, Hyderabad, Chennai, Pune, Mumbai", "Maternity Hospital", "Women & children's specialty healthcare network"),
+  ("IHH Healthcare India", "https://www.ihhhealthcare.com", "https://www.ihhhealthcare.com/careers", "Mumbai, Hyderabad, Bengaluru, Chennai", "Hospital Group", "Global healthcare group operating Gleneagles Hospitals"),
+  ("Dr. Agarwal's Eye Hospital", "https://www.dragarwal.com", "https://www.dragarwal.com/careers/", "Chennai, Hyderabad, Bengaluru, Pan India", "Eye Care Chain", "Advanced cataract, LASIK & retinal eye care"),
+  ("Centre for Sight", "https://www.centreforsight.net", "https://www.centreforsight.net/careers/", "Delhi NCR, Hyderabad, Bengaluru, Pan India", "Eye Care Chain", "Cornea, refractive surgery & ophthalmology services"),
+  ("LV Prasad Eye Institute", "https://www.lvpei.org", "https://www.lvpei.org/careers", "Hyderabad, Bhubaneswar, Visakhapatnam, Vijayawada", "Eye Care Institute", "Non-profit WHO eye care institute & corneal research"),
+  ("Sankara Nethralaya", "https://www.sankaranethralaya.org", "https://www.sankaranethralaya.org/careers.html", "Chennai, Bengaluru, Kolkata", "Eye Care Hospital", "Not-for-profit ophthalmic hospital & vision research"),
+  ("Narayana Nethralaya", "https://www.narayananethralaya.org", "https://www.narayananethralaya.org/careers/", "Bengaluru", "Eye Care Hospital", "Super-specialty eye hospital & ocular gene therapy"),
+  ("Dr Lal PathLabs", "https://www.lalpathlabs.com", "https://www.lalpathlabs.com/careers", "Delhi NCR, Pan India", "Diagnostics Chain", "Pan-India diagnostic pathology test laboratory network"),
+  ("Metropolis Healthcare", "https://www.metropolisindia.com", "https://www.metropolisindia.com/careers", "Mumbai, Bengaluru, Hyderabad, Chennai, Pan India", "Diagnostics Chain", "Pathology & diagnostic test centers across India"),
+  ("Thyrocare Technologies", "https://www.thyrocare.com", "https://www.thyrocare.com/careers", "Mumbai, Pan India", "Diagnostics Chain", "Automated preventive health & blood diagnostic lab"),
+  ("Vijaya Diagnostic Centre", "https://www.vijayadiagnostic.com", "https://www.vijayadiagnostic.com/careers", "Hyderabad, Bengaluru, Chennai, Vizag", "Diagnostics Chain", "Integrated radiology & pathology diagnostic services"),
+  ("Neuberg Diagnostics", "https://neubergdiagnostics.com", "https://neubergdiagnostics.com/careers/", "Bengaluru, Chennai, Hyderabad, Ahmedabad", "Diagnostics Chain", "Genomics, pathology & advanced diagnostic testing"),
+  ("Apollo Diagnostics", "https://www.apollodiagnostics.in", "https://www.apollodiagnostics.in/careers", "Pan India, Hyderabad, Bengaluru", "Diagnostics Chain", "Pathology laboratory network by Apollo Health & Lifestyle"),
+  ("Redcliffe Labs", "https://redcliffelabs.com", "https://redcliffelabs.com/careers", "Delhi NCR, Bengaluru, Hyderabad, Pan India", "Diagnostics Chain", "Omnichannel digital diagnostics & routine health testing"),
+  ("Agilus Diagnostics", "https://agilusdiagnostics.com", "https://agilusdiagnostics.com/careers", "Delhi NCR, Mumbai, Bengaluru, Hyderabad", "Diagnostics Chain", "Formerly SRL Diagnostics - Comprehensive laboratory network"),
+  ("Strand Life Sciences", "https://strandls.com", "https://strandls.com/careers/", "Bengaluru, Hyderabad", "Genomics / Testing", "Precision medicine, bioinformatics & genomic testing"),
+  ("MedGenome", "https://www.medgenome.com", "https://www.medgenome.com/careers/", "Bengaluru, Hyderabad, Mumbai", "Genomics / Testing", "Genetic diagnostics, DNA sequencing & drug discovery"),
+  ("MapmyGenome", "https://mapmygenome.in", "https://mapmygenome.in/pages/careers", "Hyderabad, Bengaluru", "Genomics / HealthTech", "Personalized genomics, DNA testing & preventative health"),
+  ("5paisa Healthcare / HealthTech", "https://www.5paisa.com", "https://www.5paisa.com/careers", "Mumbai, Bengaluru", "HealthTech", "Digital health tech & wellness financial products"),
+  ("Medtronic India", "https://www.medtronic.com", "https://www.medtronic.com/in-en/about/careers.html", "Hyderabad, Bengaluru, Mumbai, Gurugram", "MedTech / MNC", "Pacemakers, surgical robotics, diabetes & neuro devices"),
+  ("GE HealthCare", "https://www.gehealthcare.com", "https://www.gehealthcare.com/about/careers", "Bengaluru, Hyderabad", "MedTech / MNC", "Medical imaging, CT, MRI, ultrasound & patient monitoring"),
+  ("Siemens Healthineers", "https://www.siemens-healthineers.com", "https://www.siemens-healthineers.com/careers", "Bengaluru, Vadodara, Mumbai, Hyderabad, Pan India", "MedTech / MNC", "Diagnostic imaging, laboratory automation & AI healthcare"),
+  ("Philips Healthcare", "https://www.philips.com", "https://www.careers.philips.com", "Bengaluru, Pune, Chennai, Mumbai", "MedTech / MNC", "Image-guided therapy, patient monitoring & health informatics"),
+  ("Stryker India", "https://www.stryker.com", "https://careers.stryker.com", "Gurugram, Bengaluru, Hyderabad", "MedTech / MNC", "Orthopedic implants, surgical navigation & neurotechnology"),
+  ("Boston Scientific India", "https://www.bostonscientific.com", "https://www.bostonscientific.com/en-US/careers.html", "Bengaluru, Gurugram, Pune, Mumbai", "MedTech / MNC", "Interventional cardiology, endoscopy & neuromodulation"),
+  ("Abbott India", "https://www.abbott.com", "https://www.abbott.com/careers.html", "Mumbai, Bengaluru, Hyderabad, Goa", "MedTech & Diagnostics", "Glucose monitoring, diagnostics & vascular devices"),
+  ("Johnson & Johnson MedTech", "https://www.jnjmedtech.com", "https://jobs.jnj.com", "Mumbai, Bengaluru, Hyderabad", "MedTech / MNC", "Surgical instruments, orthopedic implants & vision care"),
+  ("Becton Dickinson (BD)", "https://www.bd.com", "https://jobs.bd.com", "Gurugram, Bengaluru, Pune", "MedTech / MNC", "Medical supplies, injection devices & bioscience systems"),
+  ("B. Braun India", "https://www.bbraun.co.in", "https://www.bbraun.co.in/en/careers.html", "Mumbai, Hyderabad, Bengaluru", "MedTech / MNC", "Infusion therapy, dialysis equipment & surgical instruments"),
+  ("Baxter India", "https://www.baxter.com", "https://jobs.baxter.com", "Bengaluru, Gurugram, Chennai", "MedTech / MNC", "Renal dialysis, IV solutions & critical care medical tech"),
+  ("Fresenius Medical Care", "https://www.freseniusmedicalcare.com", "https://jobs.freseniusmedicalcare.com", "Bengaluru, Chennai, Mumbai", "MedTech / Dialysis", "Dialysis products, kidney disease care & clinical services"),
+  ("Fresenius Kabi", "https://www.fresenius-kabi.com", "https://www.fresenius-kabi.com/careers", "Mumbai, Ranjangaon", "MedTech / Clinical", "Infusion therapy, clinical nutrition & IV generic drugs"),
+  ("Olympus India", "https://www.olympus-asiapac.com/in/", "https://www.olympus-asiapac.com/in/en/careers/", "Mumbai, Bengaluru", "MedTech / Optics", "Endoscopes, gastrointestinal optics & surgical imaging"),
+  ("Karl Storz India", "https://www.karlstorz.com", "https://www.karlstorz.com/us/en/careers.htm", "Mumbai, Bengaluru, Delhi NCR", "MedTech / Optics", "Endoscopy, laparoscopic instruments & OR integration"),
+  ("Smith+Nephew India", "https://www.smith-nephew.com", "https://www.smith-nephew.com/en/careers", "Mumbai, Bengaluru, Delhi NCR", "MedTech / MNC", "Orthopedic reconstruction, sports medicine & wound care"),
+  ("Zimmer Biomet India", "https://www.zimmerbiomet.com", "https://www.zimmerbiomet.com/en/about-us/careers.html", "Mumbai, Bengaluru, Delhi NCR", "MedTech / MNC", "Joint replacement, dental implants & robotic surgery"),
+  ("Edwards Lifesciences India", "https://www.edwards.com", "https://www.edwards.com/careers", "Mumbai, Bengaluru, Delhi NCR", "MedTech / MNC", "Transcatheter heart valves & hemodynamic monitoring"),
+  ("Intuitive Surgical India", "https://www.intuitive.com", "https://www.intuitive.com/en-us/about-us/company/careers", "Mumbai, Bengaluru, Delhi NCR", "MedTech / Robotics", "da Vinci robotic surgical systems & minimally invasive tech"),
+  ("Alcon India", "https://www.alcon.com", "https://www.alcon.com/careers", "Mumbai, Bengaluru, Delhi NCR", "MedTech / Vision", "Surgical ophthalmic equipment & contact lens products"),
+  ("EssilorLuxottica India", "https://www.essilorluxottica.com", "https://www.essilorluxottica.com/en/careers/", "Bengaluru, Mumbai, Gurugram", "Eyewear / MedTech", "Ophthalmic lenses, optical equipment & eyewear design"),
+  ("CooperVision India", "https://coopervision.com", "https://coopervision.com/careers", "Mumbai, Bengaluru, Delhi NCR", "Vision Care", "Contact lenses & myopia management optical products"),
+  ("Carl Zeiss India", "https://www.zeiss.co.in", "https://www.zeiss.co.in/corporate/careers.html", "Mumbai, Bengaluru, Delhi NCR", "MedTech / Optics", "Surgical microscopes, ophthalmic diagnostic devices & lenses"),
+  ("Hologic India", "https://www.hologic.com", "https://www.hologic.com/careers", "Bengaluru, Mumbai", "MedTech / Diagnostics", "Mammography, 3D breast imaging & women's health tech"),
+  ("ResMed India", "https://www.resmed.com", "https://careers.resmed.com", "Mumbai, Bengaluru, Delhi NCR", "MedTech / Sleep", "CPAP devices, sleep apnea therapy & ventilation tech"),
+  ("Masimo India", "https://www.masimo.com", "https://www.masimo.com/careers/", "Mumbai, Bengaluru, Delhi NCR", "MedTech / Sensors", "Pulse oximetry, noninvasive patient monitoring sensors"),
+  ("Nipro India", "https://www.nipro-group.com", "https://www.nipro-group.com/en/careers", "Mumbai, Hyderabad", "MedTech / Dialysis", "Dialyzers, hemodialysis machines & medical needles"),
+  ("Terumo India", "https://www.terumo.com", "https://www.terumo.com/careers/", "Mumbai, Bengaluru, Delhi NCR", "MedTech / Interventional", "Interventional cardiology, blood management & vascular devices"),
+  ("Roche Diagnostics India", "https://diagnostics.roche.com", "https://www.roche.com/careers", "Mumbai, Bengaluru, Chennai", "In-Vitro Diagnostics", "Laboratory automation, molecular testing & tissue diagnostics"),
+  ("Danaher India", "https://www.danaher.com", "https://jobs.danaher.com", "Bengaluru, Pune, Mumbai", "Life Sciences / MedTech", "Biotechnology, diagnostics, filtration & life science tools"),
+  ("Beckman Coulter", "https://www.beckmancoulter.com", "https://www.beckmancoulter.com/en/about-us/careers", "Bengaluru, Pune, Mumbai", "In-Vitro Diagnostics", "Clinical chemistry, hematology & flow cytometry analyzers"),
+  ("Leica Biosystems", "https://www.leicabiosystems.com", "https://www.leicabiosystems.com/about/careers/", "Bengaluru, Mumbai", "Histopathology", "Anatomical pathology, tissue staining & digital pathology"),
+  ("Cepheid", "https://www.cepheid.com", "https://www.cepheid.com/en/about/careers", "Bengaluru, Delhi NCR", "Molecular Diagnostics", "GeneXpert PCR automated molecular diagnostic testing"),
+  ("Thermo Fisher Scientific", "https://www.thermofisher.com", "https://jobs.thermofisher.com", "Bengaluru, Hyderabad, Mumbai", "Life Sciences / Diagnostics", "Laboratory analytical instruments, reagents & clinical research"),
+  ("Bio-Rad Laboratories", "https://www.bio-rad.com", "https://www.bio-rad.com/en-in/corporate/careers", "Bengaluru, Gurugram", "Life Sciences / Diagnostics", "Life science research products & clinical diagnostics"),
+  ("Agilent Technologies India", "https://www.agilent.com", "https://careers.agilent.com", "Bengaluru, Manesar, Gurugram", "Life Sciences / Analytics", "Chromatography, mass spectrometry & lab automation"),
+  ("Waters Corporation India", "https://www.waters.com", "https://www.waters.com/nextgen/in/en/about-waters/careers.html", "Bengaluru, Mumbai", "Analytical Instruments", "HPLC, LC-MS mass spectrometry & thermal analysis"),
+  ("Illumina India", "https://www.illumina.com", "https://www.illumina.com/company/careers.html", "Bengaluru, Delhi NCR", "Genomics / Sequencing", "DNA sequencing instruments, NGS kits & genomic data"),
+  ("QIAGEN India", "https://www.qiagen.com", "https://www.qiagen.com/us/about-us/careers/", "Delhi NCR, Bengaluru", "Sample & Assay Tech", "DNA/RNA extraction, PCR testing & bioinformatics"),
+  ("Meril Life Sciences", "https://www.merillife.com", "https://www.merillife.com/careers", "Gujarat, Bengaluru, Hyderabad", "MedTech / Indian", "Vascular intervention, orthopedic implants & diagnostics"),
+  ("Trivitron Healthcare", "https://www.trivitron.com", "https://www.trivitron.com/careers", "Chennai, Bengaluru, Hyderabad", "MedTech / Indian", "Newborn screening, imaging, ICU equipment & renal care"),
+  ("Poly Medicure", "https://www.polymedicure.com", "https://www.polymedicure.com/careers/", "Delhi NCR, Faridabad", "MedTech / Supplies", "IV cannulas, vascular access devices & infusion sets"),
+  ("Healthium Medtech", "https://healthiummedtech.com", "https://healthiummedtech.com/careers/", "Bengaluru, Chennai, Hyderabad", "MedTech / Surgical", "Surgical sutures, wound closure & arthroscopy devices"),
+  ("Sahajanand Medical Technologies", "https://www.smtpl.com", "https://www.smtpl.com/careers", "Surat, Ahmedabad, Bengaluru", "MedTech / Cardiac", "Drug-eluting stents, structural heart & balloon catheters"),
+  ("BPL Medical Technologies", "https://www.bplmedicaltechnologies.com", "https://www.bplmedicaltechnologies.com/careers/", "Bengaluru, Hyderabad, Mumbai", "MedTech / Devices", "ECG machines, patient monitors, defibrillators & imaging"),
+  ("Skanray Technologies", "https://skanray.com", "https://skanray.com/careers/", "Mysuru, Bengaluru", "MedTech / Devices", "High-frequency X-ray systems, surgical C-Arms & ventilators"),
+  ("Allengers Medical Systems", "https://www.allengers.com", "https://www.allengers.com/careers.php", "Chandigarh, Delhi NCR", "MedTech / Imaging", "X-ray machines, DSA Cathlabs, Mammography & EEG systems"),
+  ("PharmEasy", "https://pharmeasy.in", "https://pharmeasy.in/careers", "Mumbai, Bengaluru", "HealthTech / E-Pharmacy", "Online pharmacy delivery & diagnostic testing platform"),
+  ("Tata 1mg", "https://www.1mg.com", "https://www.1mg.com/jobs", "Gurugram, Bengaluru", "HealthTech / E-Pharmacy", "Digital healthcare platform, medicine delivery & testing"),
+  ("Cult.fit", "https://www.cult.fit", "https://www.cult.fit/careers", "Bengaluru", "HealthTech / Fitness", "Fitness centers, digital wellness apps & healthcare"),
+  ("Pristyn Care", "https://www.pristyncare.com", "https://www.pristyncare.com/careers", "Gurugram, Bengaluru, Hyderabad", "HealthTech / Surgical", "Full-stack surgical healthcare services platform"),
+  ("Practo", "https://www.practo.com", "https://www.practo.com/careers", "Bengaluru", "HealthTech / Platform", "Doctor discovery, teleconsultation & clinic management SaaS"),
+  ("Netmeds", "https://www.netmeds.com", "https://www.netmeds.com/careers", "Chennai, Bengaluru", "HealthTech / E-Pharmacy", "Reliance Retail digital healthcare & online pharmacy"),
+  ("Apollo 24/7", "https://www.apollo247.com", "https://www.apollo247.com/careers", "Hyderabad, Bengaluru", "HealthTech / Digital", "Omnichannel digital healthcare platform by Apollo"),
+  ("Apex Heart Institute", "https://www.apexheartinstitute.com", "https://www.apexheartinstitute.com/careers", "Ahmedabad", "Cardiac Specialty", "Premier interventional cardiology & cardiac surgery center")
+]
+
+def build_exact_file(title, desc, items, file_path):
+  md_lines = [
+    f"# {title}",
+    "",
+    desc,
+    "",
+    "> **How to edit on GitHub**: Click the pencil ✏️ icon at the top right of this file, add or edit a company line in the table below, and click **Propose changes** to submit a Pull Request!",
+    "",
+    "| ID | Company Name | Official Website | Careers Portal | India Locations | Type | Key Focus / Notes |",
+    "|---|---|---|---|---|---|---|"
+  ]
+
+  for idx, item in enumerate(items, 1):
+    name, web, car, loc, ctype, focus = item
+    web_link = f"[Website]({web})"
+    car_link = f"[Careers Portal]({car})"
+    md_lines.append(f"| {idx} | **{name}** | {web_link} | {car_link} | {loc} | `{ctype}` | {focus} |")
+
+  with open(file_path, 'w', encoding='utf8') as f:
+    f.write('\n'.join(md_lines))
+
+  print(f"[OK] Wrote {file_path} with EXACT {len(items)} entries.")
+
+build_exact_file(
+  "Hospitals, Diagnostics & HealthTech Companies in India",
+  "A curated list of **100 Hospitals, Diagnostic Chains, Eyecare Specialty, MedTech Equipment & HealthTech Platforms** operating in India.",
+  health_100_items,
+  "companies/healthcare.md"
+)

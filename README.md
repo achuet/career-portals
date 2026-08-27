@@ -5,7 +5,7 @@
 [![GitHub Pages Web App](https://img.shields.io/badge/🌐%20Interactive%20Web%20App-Live%20Demo-brightgreen?style=for-the-badge)](https://achuet.github.io/career-portals/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/achuet/career-portals/pulls)
 
-An open-source directory of **230+ verified company career portals, official websites, office locations, and categories** across India.
+An open-source directory of **460+ verified company career portals, official websites, office locations, and categories** across India.
 
 ---
 
@@ -21,9 +21,9 @@ Click any category below to view formatted company tables directly inside GitHub
 | Category | Markdown File | Total Listed | Description |
 |---|---|---|---|
 | 🧪 **Pharma & Life Sciences** | [**`companies/pharma.md`**](companies/pharma.md) | **100 Companies** | Top Pharma, Biotech, MedTech, CDMO & CRO companies in India |
-| 🏦 **Banking & Fintech** | [**`companies/finance.md`**](companies/finance.md) | **64 Companies** | Public & Private Banks, Investment GCCs, InsurTech & Neobanks |
-| 💻 **IT & Software** | [**`companies/tech.md`**](companies/tech.md) | **42 Companies** | IT Services, Product MNCs, Cloud, SaaS, Semiconductor & Engineering |
-| 🏥 **Hospitals & Healthcare** | [**`companies/healthcare.md`**](companies/healthcare.md) | **27 Companies** | Hospital Chains, Diagnostics Networks, Eyecare Specialty & HealthTech |
+| 🏦 **Banking & Fintech** | [**`companies/finance.md`**](companies/finance.md) | **171 Companies** | Public & Private Banks, Investment GCCs, InsurTech & Neobanks |
+| 💻 **IT & Software** | [**`companies/tech.md`**](companies/tech.md) | **92 Companies** | IT Services, Product MNCs, Cloud, SaaS, Semiconductor & Engineering |
+| 🏥 **Hospitals & Healthcare** | [**`companies/healthcare.md`**](companies/healthcare.md) | **100 Companies** | Hospital Chains, Diagnostics Networks, Eyecare Specialty & HealthTech |
 
 ---
 

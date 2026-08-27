@@ -6,11 +6,11 @@ A curated list of **100 IT Services, Product MNCs, SaaS, Cloud, Semiconductor & 
 
 | ID | Company Name | Official Website | Careers Portal | India Locations | Type | Key Focus / Notes |
 |---|---|---|---|---|---|---|
-| 1 | **Tata Consultancy Services (TCS)** | [Website](https://www.tcs.com)) | [Careers Portal](https://www.tcs.com/careers)+careers) | India | `Company` | Corporate Operations & Career Opportunities |
-| 2 | **Infosys** | [Website](https://www.infosys.com) | [Careers Portal](https://www.infosys.com/careers.html) | India | `Company` | Corporate Operations & Career Opportunities |
-| 3 | **HCLTech** | [Website](https://www.hcltech.com) | [Careers Portal](https://www.hcltech.com/careers) | India | `Company` | Corporate Operations & Career Opportunities |
-| 4 | **Wipro** | [Website](https://www.wipro.com) | [Careers Portal](https://careers.wipro.com) | India | `Company` | Corporate Operations & Career Opportunities |
-| 5 | **Tech Mahindra** | [Website](https://www.techmahindra.com) | [Careers Portal](https://www.techmahindra.com/en-in/careers/) | India | `Company` | Corporate Operations & Career Opportunities |
+| 1 | **Tata Consultancy Services (TCS)** | [Website](https://www.tcs.com) | [Careers Portal](https://www.tcs.com/careers) | Mumbai, Bengaluru, Hyderabad, Chennai, Pune | `IT Services` | Global IT Consulting, Enterprise Cloud, AI & Digital Solutions |
+| 2 | **Infosys** | [Website](https://www.infosys.com) | [Careers Portal](https://www.infosys.com/careers.html) | Bengaluru, Mysuru, Hyderabad, Pune, Chennai | `IT Services` | Next-Gen Digital Services, AI Platforms & Cloud Consulting |
+| 3 | **HCLTech** | [Website](https://www.hcltech.com) | [Careers Portal](https://www.hcltech.com/careers) | Noida, Bengaluru, Chennai, Hyderabad, Pune | `IT Services` | Engineering & R&D Services, Software Products & Digital Tech |
+| 4 | **Wipro** | [Website](https://www.wipro.com) | [Careers Portal](https://careers.wipro.com) | Bengaluru, Hyderabad, Chennai, Pune, Noida | `IT Services` | Cognitive Computing, Cybersecurity, Cloud & Infrastructure |
+| 5 | **Tech Mahindra** | [Website](https://www.techmahindra.com) | [Careers Portal](https://www.techmahindra.com/careers/) | Pune, Hyderabad, Bengaluru, Mumbai, Chennai | `IT Services` | 5G Telecom Networks, AI Solutions & Digital Transformation |
 | 6 | **Mphasis** | [Website](https://www.mphasis.com) | [Careers Portal](https://www.mphasis.com/home/careers.html) | Bengaluru, Hyderabad, Mumbai, Pune, Chennai | `Company` | Corporate Operations & Career Opportunities |
 | 7 | **Persistent Systems** | [Website](https://www.persistent.com) | [Careers Portal](https://www.persistent.com/careers/) | Bengaluru, Pune, Mumbai, Hyderabad | `Company` | Corporate Operations & Career Opportunities |
 | 8 | **Coforge** | [Website](https://www.coforge.com) | [Careers Portal](https://www.coforge.com/careers) | Pune, Hyderabad, Bengaluru, Mumbai | `Company` | Corporate Operations & Career Opportunities |

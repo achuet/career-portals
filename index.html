@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobseeker Company Directory | Career Portals & Locations</title>
+  <meta name="description" content="Open-source directory of top companies, official career links, and office locations across India for jobseekers. Easy to browse, search, and edit on GitHub.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container announcement-content">
+      <span><i class="fa-solid fa-sparkles"></i> Open-Source Jobseeker Directory — Easily add or update companies directly on GitHub!</span>
+      <a href="https://github.com/achuet/career-portals" target="_blank" id="gh-edit-link" class="announcement-btn">
+        <i class="fa-brands fa-github"></i> Edit on GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="logo">
+        <div class="logo-icon"><i class="fa-solid fa-building-user"></i></div>
+        <div class="logo-text">
+          <h1>CompanyHub</h1>
+          <span class="badge-tag">Jobseeker Portal</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <button id="theme-toggle" class="btn btn-icon" title="Toggle Theme" aria-label="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button id="export-btn" class="btn btn-secondary">
+          <i class="fa-solid fa-download"></i> Export Data
+        </button>
+        <button id="add-company-btn" class="btn btn-primary">
+          <i class="fa-solid fa-plus"></i> Submit Company
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero & Search Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <h2 class="hero-title">Find Top Companies & Official Career Portals</h2>
+        <p class="hero-subtitle">Direct, verified career links and office locations for jobseekers across Pharma, Tech, Banking, and more.</p>
+        
+        <!-- KPI Dashboard Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon"><i class="fa-solid fa-building"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-value" id="kpi-companies">0</span>
+              <span class="kpi-label">Companies Listed</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-value" id="kpi-cities">0</span>
+              <span class="kpi-label">Cities Covered</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon"><i class="fa-solid fa-layer-group"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-value" id="kpi-sectors">3</span>
+              <span class="kpi-label">Sectors</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon"><i class="fa-solid fa-star"></i></div>
+            <div class="kpi-info">
+              <span class="kpi-value" id="kpi-saved">0</span>
+              <span class="kpi-label">Saved Favorites</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Area -->
+  <main class="main-container container">
+    
+    <!-- Controls & Filters Bar -->
+    <div class="filters-wrapper">
+      
+      <!-- Sector Tabs -->
+      <div class="sector-tabs" role="tablist" id="sector-tabs">
+        <button class="tab-btn active" data-file="companies/pharma.md" role="tab">
+          <i class="fa-solid fa-vial"></i> Pharma & Life Sciences <span class="tab-count" id="pharma-count">100</span>
+        </button>
+        <button class="tab-btn" data-file="companies/tech.md" role="tab">
+          <i class="fa-solid fa-laptop-code"></i> IT & Software <span class="tab-count" id="tech-count">10</span>
+        </button>
+        <button class="tab-btn" data-file="companies/finance.md" role="tab">
+          <i class="fa-solid fa-landmark"></i> Banking & Fintech <span class="tab-count" id="finance-count">7</span>
+        </button>
+      </div>
+
+      <!-- Search and Display Switcher -->
+      <div class="search-toolbar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="search-input" placeholder="Search by company name, location (e.g. Hyderabad), type..." autocomplete="off">
+          <button id="clear-search" class="clear-btn" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="toolbar-right">
+          <div class="type-filter-select">
+            <select id="type-select">
+              <option value="ALL">All Types / Categories</option>
+            </select>
+          </div>
+
+          <div class="view-toggle">
+            <button id="view-grid" class="view-btn active" title="Grid Card View">
+              <i class="fa-solid fa-border-all"></i>
+            </button>
+            <button id="view-table" class="view-btn" title="Table List View">
+              <i class="fa-solid fa-table-list"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- City Filter Pills -->
+      <div class="city-filters">
+        <span class="filter-label"><i class="fa-solid fa-filter"></i> City Filter:</span>
+        <div class="city-pills" id="city-pills">
+          <button class="city-pill active" data-city="ALL">All Cities</button>
+          <!-- Dynamic city pills populated by JS -->
+        </div>
+      </div>
+
+      <!-- Favorites Only Toggle -->
+      <div class="favorites-bar">
+        <label class="toggle-checkbox">
+          <input type="checkbox" id="fav-only-checkbox">
+          <span class="checkmark"></span>
+          <span>Show Favorites Only (<span id="fav-count-text">0</span>)</span>
+        </label>
+        <div class="results-count" id="results-count-text">Showing 100 companies</div>
+      </div>
+    </div>
+
+    <!-- Data Display Area -->
+    <div id="loading-spinner" class="loading-state" style="display: none;">
+      <div class="spinner"></div>
+      <p>Loading company directory data...</p>
+    </div>
+
+    <!-- Grid View Container -->
+    <div id="grid-container" class="cards-grid"></div>
+
+    <!-- Table View Container -->
+    <div id="table-container" class="table-responsive" style="display: none;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 50px;">Fav</th>
+            <th style="width: 60px;">ID</th>
+            <th>Company Name</th>
+            <th>Type</th>
+            <th>India Locations</th>
+            <th>Key Focus / Description</th>
+            <th style="width: 220px;">Quick Links</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="empty-state" style="display: none;">
+      <div class="empty-icon"><i class="fa-solid fa-building-circle-xmark"></i></div>
+      <h3>No companies found</h3>
+      <p>Try adjusting your search terms or city filters.</p>
+      <button id="reset-filters-btn" class="btn btn-secondary">Reset Filters</button>
+    </div>
+
+  </main>
+
+  <!-- Submit Company Modal -->
+  <div id="add-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-plus-circle"></i> Add a Company to the Directory</h3>
+        <button class="modal-close" id="close-add-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">This directory is stored as open Markdown table files on GitHub! Fill in the details below to generate a Markdown table row that you can paste directly into GitHub.</p>
+        
+        <form id="add-company-form">
+          <div class="form-group">
+            <label for="comp-name">Company Name *</label>
+            <input type="text" id="comp-name" placeholder="e.g. BioTech Solutions" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="comp-website">Website URL *</label>
+              <input type="url" id="comp-website" placeholder="https://www.example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="comp-careers">Careers URL *</label>
+              <input type="url" id="comp-careers" placeholder="https://www.example.com/careers" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="comp-locations">India Locations *</label>
+              <input type="text" id="comp-locations" placeholder="e.g. Hyderabad, Bengaluru" required>
+            </div>
+            <div class="form-group">
+              <label for="comp-type">Type / Category *</label>
+              <input type="text" id="comp-type" placeholder="e.g. Global MNC, Indian Pharma" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="comp-focus">Key Focus / Description</label>
+            <input type="text" id="comp-focus" placeholder="e.g. Oncology R&D, Biosimilars">
+          </div>
+
+          <div class="form-group">
+            <label>Generated Markdown Row:</label>
+            <div class="code-preview">
+              <pre><code id="markdown-output">| ID | **Company** | [Website](url) | [Careers Portal](url) | Location | `Type` | Focus |</code></pre>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="copy-md-btn"><i class="fa-regular fa-copy"></i> Copy Markdown Row</button>
+        <a href="https://github.com/achuet/career-portals/blob/main/companies/pharma.md" target="_blank" class="btn btn-primary" id="open-gh-edit">
+          <i class="fa-brands fa-github"></i> Open & Edit on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Data Modal -->
+  <div id="export-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card modal-sm">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-file-export"></i> Export Company Directory</h3>
+        <button class="modal-close" id="close-export-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Export current filtered view (<span id="export-count">0</span> companies) in your preferred format:</p>
+        <div class="export-options">
+          <button class="export-option-btn" id="export-json">
+            <i class="fa-solid fa-code"></i>
+            <div>
+              <strong>Export as JSON</strong>
+              <small>Structured data for developers</small>
+            </div>
+          </button>
+          <button class="export-option-btn" id="export-csv">
+            <i class="fa-solid fa-file-csv"></i>
+            <div>
+              <strong>Export as CSV</strong>
+              <small>Spreadsheet compatible format</small>
+            </div>
+          </button>
+          <button class="export-option-btn" id="export-md">
+            <i class="fa-brands fa-markdown"></i>
+            <div>
+              <strong>Export as Markdown</strong>
+              <small>Markdown table snippet</small>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>Built for jobseekers. Open source & maintained on GitHub.</p>
+      <div class="footer-links">
+        <a href="https://github.com/achuet/career-portals" target="_blank"><i class="fa-brands fa-github"></i> Repository</a>
+        <a href="companies/pharma.md" target="_blank"><i class="fa-solid fa-file-lines"></i> View Pharma.md</a>
+        <a href="companies/tech.md" target="_blank"><i class="fa-solid fa-file-code"></i> View Tech.md</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

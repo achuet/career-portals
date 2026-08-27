@@ -8,5 +8,7 @@ url_validation_report.json
 scripts/
 chrome-extension/
 extension/
+chrome-extension-screen-recorder/
+screen-recorder-extension/
 .DS_Store
 Thumbs.db

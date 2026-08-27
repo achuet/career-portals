@@ -1,102 +1,75 @@
-# 🚀 Jobseeker Company Directory & Career Portals
+# 🚀 Career Portals - Open-Source Jobseeker Company Directory
 
 [![GitHub License](https://img.shields.io/github/license/achuet/career-portals?color=blue)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/achuet/career-portals?style=social)](https://github.com/achuet/career-portals)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-brightgreen)](https://achuet.github.io/career-portals/)
+[![GitHub Pages Web App](https://img.shields.io/badge/🌐%20Interactive%20Web%20App-Live%20Demo-brightgreen?style=for-the-badge)](https://achuet.github.io/career-portals/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/achuet/career-portals/pulls)
 
-An open-source, community-curated directory designed to help **jobseekers** quickly find **official career portals, websites, office locations, and sub-industry focus** for companies across India.
-
-Instead of navigating scattered job boards or outdated lists, jobseekers can browse formatted Markdown tables natively inside GitHub or use the interactive **GitHub Pages Web App** with real-time search, city filtering, bookmarking, and 1-click links to direct career portals and LinkedIn job searches.
+An open-source directory of **230+ verified company career portals, official websites, office locations, and categories** across India.
 
 ---
 
-## 📁 Category Directories (Markdown Tables)
+> 🌐 **Looking for the interactive web app with search, city filters, and card views?**
+> ### 👉 [Click here to launch the Live Web App (achuet.github.io/career-portals)](https://achuet.github.io/career-portals/)
 
-Each industry category is maintained as an easily editable **Markdown (`.md`)** table file. Click any link below to view or edit:
+---
 
-| Category | File | Description | Company Count |
+## 📂 Category Directories (Browse Markdown Tables)
+
+Click any category below to view formatted company tables directly inside GitHub:
+
+| Category | Markdown File | Total Listed | Description |
 |---|---|---|---|
-| 🧪 **Pharma & Life Sciences** | [`companies/pharma.md`](companies/pharma.md) | Top 100 Pharma, Biotech, MedTech, CDMO & CRO companies in India | **100** |
-| 🏦 **Banking & Fintech** | [`companies/finance.md`](companies/finance.md) | Public & Private Banks, Investment GCCs, InsurTech & Neobanks | **64** |
-| 💻 **IT & Software** | [`companies/tech.md`](companies/tech.md) | IT Services, Product MNCs, Cloud, SaaS, Semiconductor & Engineering | **42** |
-| 🏥 **Hospitals & Healthcare** | [`companies/healthcare.md`](companies/healthcare.md) | Hospital Chains, Diagnostics Networks, Eyecare Specialty & HealthTech | **27** |
+| 🧪 **Pharma & Life Sciences** | [**`companies/pharma.md`**](companies/pharma.md) | **100 Companies** | Top Pharma, Biotech, MedTech, CDMO & CRO companies in India |
+| 🏦 **Banking & Fintech** | [**`companies/finance.md`**](companies/finance.md) | **64 Companies** | Public & Private Banks, Investment GCCs, InsurTech & Neobanks |
+| 💻 **IT & Software** | [**`companies/tech.md`**](companies/tech.md) | **42 Companies** | IT Services, Product MNCs, Cloud, SaaS, Semiconductor & Engineering |
+| 🏥 **Hospitals & Healthcare** | [**`companies/healthcare.md`**](companies/healthcare.md) | **27 Companies** | Hospital Chains, Diagnostics Networks, Eyecare Specialty & HealthTech |
 
 ---
 
-## 🌟 Key Features
+## 🤝 How to Add a Company (3 Simple Steps)
 
-### For Jobseekers
-- 🎯 **Direct Career Links**: 1-click access to verified official career pages (no middleman redirect ads).
-- 📍 **Location Filtering**: Filter by major tech/pharma hubs (Hyderabad, Bengaluru, Mumbai, Pune, Chennai, Gurugram, etc.).
-- 🔍 **Real-Time Instant Search**: Search by company name, city, or specialty tag.
-- ⚡ **Dual View Modes**: Switch between rich visual Cards Grid and compact Table List view.
-- ⭐️ **Local Favorites**: Bookmark target companies in your browser for follow-ups.
-- 📤 **Export Data**: Download custom company lists as JSON, CSV, or Markdown.
+Adding a company is super easy and can be done **directly in your browser on GitHub**!
 
-### For Open-Source Contributors
-- 📝 **Markdown-First Format**: No complex database or backend setup required.
-- ✏️ **Edit Directly on GitHub**: Add or update companies directly from your browser by editing `.md` files in GitHub web interface.
-
----
-
-## 🤝 How to Add a New Company (Contribution Guide)
-
-Anyone can contribute! Follow these 3 simple steps to add a company:
-
-### Method 1: Edit directly on GitHub Web (No git required!)
-1. Open the target category Markdown file (e.g. [`companies/pharma.md`](companies/pharma.md) or [`companies/tech.md`](companies/tech.md)).
-2. Click the **Pencil icon ✏️** at the top right of the file to edit.
-3. Scroll to the bottom of the table and add a new row following this format:
-   ```markdown
-   | 101 | **Your Company Name** | [Website](https://www.example.com) | [Careers Portal](https://www.example.com/careers) | Hyderabad, Bengaluru | `Global MNC` | Oncology & Biologics |
-   ```
-4. Click **Propose changes**, enter a short title (e.g., "Add BioTech Solutions"), and click **Create pull request**!
-
-### Method 2: Use the Web App Generator
-1. Open the [Live Web App](https://WC-Companies.github.io/WC_Companies_List/).
-2. Click **Submit Company** button in the top navigation bar.
-3. Fill in the form — it will auto-generate the exact Markdown row for you to copy and paste!
+> ### 1️⃣ Step 1: Open a Category File
+> Select the category file where the company belongs (e.g. [`companies/tech.md`](companies/tech.md) or [`companies/pharma.md`](companies/pharma.md)).
+>
+> ### 2️⃣ Step 2: Click the Edit Icon ✏️
+> Click the **Pencil icon ✏️** at the top right of the file view on GitHub.
+>
+> ### 3️⃣ Step 3: Add a Row & Submit Pull Request
+> Scroll to the bottom of the table and paste your company details using this format:
+> ```markdown
+> | 101 | **Company Name** | [Website](https://www.example.com) | [Careers Portal](https://www.example.com/careers) | Location (e.g. Hyderabad, Bengaluru) | `Global MNC` | Key Focus / Notes |
+> ```
+> Click **Propose changes** -> **Create Pull Request**! 🎉
 
 ---
 
-## 🛠️ Local Development & Web Setup
+## 💎 Sponsored & Maintained By
 
-Since the application is built using standard static web technologies (HTML5, CSS3, Vanilla JS), you can run it locally with any web server:
+Special thanks to our sponsors and partners supporting jobseekers, open-source automation, and tech careers:
 
-```bash
-# Clone the repository
-git clone https://github.com/achuet/career-portals.git
-cd career-portals
+### 🤖 [Weavecode.ai](https://weavecode.ai)
+- **Multiple AI models, one API, unlimited tokens, unlimited coding, unlimited automations.**
+- Explore at [weavecode.ai](https://weavecode.ai)
 
-# Option 1: Serve using Python 3
-python -m http.server 8000
+### 🎯 [Skillshooters.com](https://skillshooters.com)
+- **AI powered job platform.** No credit card required.
+- **Unlimited job posts & unlimited applicants for FREE.**
+- Features AI powered job matching, career insights, and resume scoring.
+- Explore at [skillshooters.com](https://skillshooters.com)
 
-# Option 2: Serve using Node npx
-npx serve .
-```
-
-Open `http://localhost:8000` in your web browser to test!
-
----
-
-## 🌐 Deploying to GitHub Pages
-
-To host this directory on your own GitHub Pages:
-
-1. Go to your repository **Settings** on GitHub.
-2. Click **Pages** in the left sidebar menu.
-3. Under **Build and deployment**:
-   - **Source**: Select `Deploy from a branch`
-   - **Branch**: Select `main` branch / `root (/)` folder.
-4. Click **Save**. Your site will automatically go live at `https://achuet.github.io/career-portals/`!
+### 🛡️ [TheCyberMinds.com](https://thecyberminds.com)
+- **Cybersecurity & Zero Trust Services**
+- IT Consulting & Infrastructure Procurement
+- Web & App Development & Staff Augmentation
+- Explore at [thecyberminds.com](https://thecyberminds.com)
 
 ---
 
 ## 📜 License
 
-Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more details.
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
 
----
-
-<p center>Made with ❤️ to help all jobseekers land their dream roles.</p>
+<p align="center">Made with ❤️ to help jobseekers land their dream roles.</p>

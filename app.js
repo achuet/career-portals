@@ -71,12 +71,13 @@
   };
 
   // Initialize Application
-  function init() {
+  async function init() {
     setupTheme();
     setupEventListeners();
     updateViewModeUI();
-    loadCategoryData(state.activeCategoryFile);
     updateFavCountUI();
+    await loadAllGlobalStats();
+    loadCategoryData(state.activeCategoryFile);
   }
 
   // Setup Theme Mode
@@ -108,7 +109,6 @@
       
       buildDynamicFilters();
       applyFilters();
-      updateKPIDashboard();
       
       // Update GH edit button target link
       elements.openGhEditBtn.href = `https://github.com/achuet/career-portals/blob/main/${filePath}`;
@@ -119,6 +119,41 @@
     } finally {
       showLoading(false);
     }
+  }
+
+  // Pre-load stats across all categories for top global KPI banner
+  async function loadAllGlobalStats() {
+    const categoryFiles = [
+      { id: 'pharma-count', path: 'companies/pharma.md' },
+      { id: 'tech-count', path: 'companies/tech.md' },
+      { id: 'finance-count', path: 'companies/finance.md' },
+      { id: 'health-count', path: 'companies/healthcare.md' }
+    ];
+
+    let grandTotalCompanies = 0;
+    const grandCitySet = new Set();
+
+    for (const cat of categoryFiles) {
+      try {
+        const res = await fetch(cat.path);
+        if (res.ok) {
+          const text = await res.text();
+          const parsed = parseMarkdownTable(text);
+          grandTotalCompanies += parsed.length;
+          parsed.forEach(c => c.locations.forEach(l => grandCitySet.add(l)));
+
+          const badgeEl = document.getElementById(cat.id);
+          if (badgeEl) badgeEl.textContent = parsed.length;
+        }
+      } catch (err) {
+        console.error(`Error loading ${cat.path} stats:`, err);
+      }
+    }
+
+    // Set Grand Total KPIs in Hero Header
+    elements.kpiCompanies.textContent = grandTotalCompanies;
+    elements.kpiCities.textContent = grandCitySet.size;
+    elements.kpiSectors.textContent = categoryFiles.length;
   }
 
   // Markdown Table Parser

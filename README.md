@@ -18,8 +18,9 @@ Each industry category is maintained as an easily editable **Markdown (`.md`)** 
 | Category | File | Description | Company Count |
 |---|---|---|---|
 | 🧪 **Pharma & Life Sciences** | [`companies/pharma.md`](companies/pharma.md) | Top 100 Pharma, Biotech, MedTech, CDMO & CRO companies in India | **100** |
-| 💻 **IT & Software** | [`companies/tech.md`](companies/tech.md) | Product MNCs, SaaS, and IT Services companies | **10+** |
-| 🏦 **Banking & Fintech** | [`companies/finance.md`](companies/finance.md) | Banks, Investment GCCs, and Neobanks | **7+** |
+| 🏦 **Banking & Fintech** | [`companies/finance.md`](companies/finance.md) | Public & Private Banks, Investment GCCs, InsurTech & Neobanks | **64** |
+| 💻 **IT & Software** | [`companies/tech.md`](companies/tech.md) | IT Services, Product MNCs, Cloud, SaaS, Semiconductor & Engineering | **42** |
+| 🏥 **Hospitals & Healthcare** | [`companies/healthcare.md`](companies/healthcare.md) | Hospital Chains, Diagnostics Networks, Eyecare Specialty & HealthTech | **27** |
 
 ---
 

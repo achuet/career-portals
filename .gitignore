@@ -1,0 +1,6 @@
+# Temporary files
+~$*.xlsx
+raw_extracted.json
+parsed_xlsx.json
+.DS_Store
+Thumbs.db
